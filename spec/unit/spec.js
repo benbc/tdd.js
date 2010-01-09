@@ -1,8 +1,7 @@
-
-describe 'YourLib'
-  describe '.someMethod()'
-    it 'should do something'
-      true.should.be true
-    end
-  end
-end
+describe('YourLib', function() {
+  describe('.someMethod()', function() {
+    it('should do something', function() {
+      foo().should.be('foo');
+    });
+  });
+});
