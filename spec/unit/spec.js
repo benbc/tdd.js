@@ -1,7 +1,7 @@
-describe('YourLib', function() {
-  describe('.someMethod()', function() {
-    it('should do something', function() {
-      foo().should.be('foo');
-    });
+describe('view', function() {
+  it('should color the dropdown green', function() {
+    var dom = jQuery('<form><select class="food-type"></select></form>');
+    view(dom);
+    dom.find('.food-type').css('color').should.be('green');
   });
 });
