@@ -1,10 +1,9 @@
 describe('tdd.js', function() {
   describe('view', function() {
-    it('should raise onTypeSelected when a type is selected', function() {
-      var dom = jQuery('<select class="food-type">'
-                       + '<option>Meat</option></select>');
+    it('should raise onTypeSelected when a type changes', function() {
+      var dom = jQuery('<form><select class="food-type"></select></form');
       view(dom).should.receive('onTypeSelected');
-      dom.find('option').attr('selected', 'selected');
+      dom.find('.food-type').change();
     });
   });
 });
