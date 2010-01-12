@@ -13,5 +13,17 @@ describe('tdd.js', function() {
       view(dom).should.receive('onTypeSelected').with_args('Meat');
       dom.find('.food-type').change();
     });
+
+    it('should populate the food options', function() {
+      var dom = jQuery('<form><select class="foodstuff"></select></form>');
+      var model = { foods: ['Pancetta', 'Bayonne ham',
+                            'Speck', 'Prosciutto'] };
+      var v = view(dom, model);
+      v.modelChanged();
+      model.foods.each(function(f) {
+        dom.should.have_child('.food option:contains('+f+')');
+        dom.find('.food option').text().should.include(f);
+      });
+    });
   });
 });
