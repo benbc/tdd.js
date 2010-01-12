@@ -37,6 +37,10 @@ describe('tdd.js', function() {
       view(dom, model).modelChanged();
       dom.find('.food option').text().should_not.include('Pate de Campagne');
     });
+
+    it('populates the types when created', function() {
+      fail('not yet implemented');
+    });
   });
 
   describe('model', function() {
