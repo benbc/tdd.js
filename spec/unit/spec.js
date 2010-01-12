@@ -37,24 +37,34 @@ describe('tdd.js', function() {
   });
 
   describe('model', function() {
-    var model;
+    var m;
     before(function() {
-      model = model({'Cheese': ['Epoisse', 'Comte']});
+      m = model({'Cheese': ['Epoisse', 'Comte']});
     });
 
     it('returns no foods by default', function() {
-      model.foods.should.eql([]);
+      m.foods.should.eql([]);
     });
 
     it('returns foods of the currently selected type', function() {
-      model.select('Cheese');
-      model.foods.should.eql(['Epoisse', 'Comte']);
+      m.select('Cheese');
+      m.foods.should.eql(['Epoisse', 'Comte']);
     });
 
     it('clears the foods if an empty type is passed', function() {
-      model.select('Cheese');
-      model.select('');
-      model.foods.should.eql([]);
+      m.select('Cheese');
+      m.select('');
+      m.foods.should.eql([]);
+    });
+  });
+
+  describe('controller', function () {
+    it('wires up onTypeSelected to model.select', function() {
+      var model = { select: function() {} };
+      var view = {};
+      controller(model, view);
+      model.should.receive('select').with_args('Fish');
+      view.onTypeSelected('Fish');
     });
   });
 });
