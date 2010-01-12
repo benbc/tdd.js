@@ -35,4 +35,26 @@ describe('tdd.js', function() {
       dom.find('.food option').text().should_not.include('Pate de Campagne');
     });
   });
+
+  describe('model', function() {
+    var model;
+    before(function() {
+      model = model({'Cheese': ['Epoisse', 'Comte']});
+    });
+
+    it('returns no foods by default', function() {
+      model.foods.should.eql([]);
+    });
+
+    it('returns foods of the currently selected type', function() {
+      model.select('Cheese');
+      model.foods.should.eql(['Epoisse', 'Comte']);
+    });
+
+    it('clears the foods if an empty type is passed', function() {
+      model.select('Cheese');
+      model.select('');
+      model.foods.should.eql([]);
+    });
+  });
 });
