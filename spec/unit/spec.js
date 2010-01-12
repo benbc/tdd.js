@@ -60,25 +60,33 @@ describe('tdd.js', function() {
       m.foods().should.eql([]);
     });
 
-    it('triggers onModelChanged when the type changes', function() {
-      m.should.receive('onModelChanged');
+    it('triggers onChange when the type changes', function() {
+      m.should.receive('onChange');
       m.select('Cheese');
     });
 
-    it("doesn't trigger onModelChanged if the type didn't change", function(){
+    it("doesn't trigger onChange if the type didn't change", function(){
       m.select('Cheese');
-      m.should_not.receive('onModelChanged');
+      m.should_not.receive('onChange');
       m.select('Cheese');
     });
   });
 
   describe('controller', function () {
-    it('wires up onTypeSelected to model.select', function() {
+    it('wires up view.onTypeSelected to model.select', function() {
       var model = { select: function() {} };
       var view = {};
       controller(model, view);
       model.should.receive('select').with_args('Fish');
       view.onTypeSelected('Fish');
+    });
+
+    it('wires up model.onChange to view.modelChanged', function() {
+      var model = {};
+      var view = { modelChanged: function() {} };
+      controller(model, view);
+      view.should.receive('modelChanged');
+      model.onChange();
     });
   });
 });
