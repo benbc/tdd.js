@@ -6,6 +6,7 @@
     <script>
       jQuery(function() { 
         TDD.init({
+          '': [],
           'Meat': ['Bratwurst', 'Spam', 'Pancetta', 'Turkey roll', 
                    'Prosciutto'],
           'Cheese': ['Ami du Chambertin', 'Epoisse', 'Comte', 'Cheddar',
@@ -17,15 +18,10 @@
   <body>
     <form>
       <p>
-        Type of food:
-        <select name="type" class="food-type">
-          <option></option>
-        </select>
+        Type of food: <select name="type" class="food-type"></select>
       </p>
       <p>
-        Foodstuff:
-        <select name="food" class="food" multiple="true">
-        </select>
+        Foodstuff: <select name="food" class="food" multiple="true"></select>
       </p>
       <p>
         <input type="submit"></input>

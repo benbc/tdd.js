@@ -14,7 +14,7 @@ describe('tdd.js', function() {
 
     it('populates the types from the model', function() {
       var model = { types: ['Meat', 'Cheese'], foods: function() { return []; } };
-      TDD.view(dom, model).modelChanged();
+      TDD.view(dom, model);
       model.types.each(function(t) {
         expect(dom.find('.food-type option').text()).to(include, t);
       });
@@ -22,17 +22,19 @@ describe('tdd.js', function() {
 
     it('removes existing values when populating types', function() {
       var model = { types: ['Cheese'], foods: function() { return []; } };
-      TDD.view(dom, model).modelChanged();
+      TDD.view(dom, model);
       expect(dom.find('.food-type option').text()).not_to(include, 'Meat');
     });
 
     it('raises onTypeSelected when a type changes', function() {
-      TDD.view(dom).should.receive('onTypeSelected');
+      TDD.view(dom, { types: [] }).should.receive('onTypeSelected');
       dom.find('.food-type').change();
     });
 
     it('passes the new selection to onTypeSelected', function() {
-      TDD.view(dom).should.receive('onTypeSelected').with_args('Meat');
+      var view = TDD.view(dom, { types: ['Meat'] });
+      expect(view).to(receive, 'onTypeSelected').with_args('Meat');
+      dom.find('.food-type option').attr('selected', 'selected');
       dom.find('.food-type').change();
     });
 
