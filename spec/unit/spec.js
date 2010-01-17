@@ -24,6 +24,7 @@ describe('tdd.js', function() {
 
     it('populates the food options when the model changes', function() {
       var model = {
+        types: [],
         foods: function() { return ['Pancetta', 'Bayonne ham', 'Speck']; }
       };
       TDD.view(dom, model).modelChanged();
@@ -33,13 +34,17 @@ describe('tdd.js', function() {
     });
 
     it('removes existing values when populating food options', function() {
-      var model = { foods: function () { return []; } };
+      var model = { types: [], foods: function () { return []; } };
       TDD.view(dom, model).modelChanged();
       dom.find('.food option').text().should_not.include('Pate de Campagne');
     });
 
-    it('populates the types when created', function() {
-      fail('not yet implemented');
+    it('populates the types from the model', function() {
+      var model = { types: ['Meat', 'Cheese'], foods: function() { return []; } };
+      TDD.view(dom, model).modelChanged();
+      model.types.each(function(t) {
+        expect(dom.find('.food-type option').text()).to(include, t);
+      });
     });
   });
 
