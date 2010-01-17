@@ -1,7 +1,7 @@
 describe('tdd.js', function() {
   describe('view', function() {
     var dom;
-    before(function() {
+    before_each(function() {
       dom = jQuery('<form>'
                  + '  <select class="food-type">'
                  + '    <option selected="selected">Meat</option>'
@@ -10,6 +10,20 @@ describe('tdd.js', function() {
                  + '    <option>Pate de Campagne</option>'
                  + '  </select>'
                  + '</form>');
+    });
+
+    it('populates the types from the model', function() {
+      var model = { types: ['Meat', 'Cheese'], foods: function() { return []; } };
+      TDD.view(dom, model).modelChanged();
+      model.types.each(function(t) {
+        expect(dom.find('.food-type option').text()).to(include, t);
+      });
+    });
+
+    it('removes existing values when populating types', function() {
+      var model = { types: ['Cheese'], foods: function() { return []; } };
+      TDD.view(dom, model).modelChanged();
+      expect(dom.find('.food-type option').text()).not_to(include, 'Meat');
     });
 
     it('raises onTypeSelected when a type changes', function() {
@@ -38,20 +52,16 @@ describe('tdd.js', function() {
       TDD.view(dom, model).modelChanged();
       dom.find('.food option').text().should_not.include('Pate de Campagne');
     });
-
-    it('populates the types from the model', function() {
-      var model = { types: ['Meat', 'Cheese'], foods: function() { return []; } };
-      TDD.view(dom, model).modelChanged();
-      model.types.each(function(t) {
-        expect(dom.find('.food-type option').text()).to(include, t);
-      });
-    });
   });
 
   describe('model', function() {
     var model;
-    before(function() {
-      model = TDD.model({'Cheese': ['Epoisse', 'Comte']});
+    before_each(function() {
+      model = TDD.model({'Cheese': ['Epoisse', 'Comte'], 'Meat': []});
+    });
+
+    it('knows all the types', function() {
+      expect(model.types).to(eql, ['Cheese', 'Meat']);
     });
 
     it('returns no foods by default', function() {
