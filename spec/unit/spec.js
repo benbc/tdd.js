@@ -66,19 +66,9 @@ describe('tdd.js', function() {
       expect(model.types).to(eql, ['Cheese', 'Meat']);
     });
 
-    it('returns no foods by default', function() {
-      model.foods().should.eql([]);
-    });
-
     it('returns foods of the currently selected type', function() {
       model.select('Cheese');
       model.foods().should.eql(['Epoisse', 'Comte']);
-    });
-
-    it('clears the foods if an empty type is passed', function() {
-      model.select('Cheese');
-      model.select('');
-      model.foods().should.eql([]);
     });
 
     it('triggers onChange when the type changes', function() {
