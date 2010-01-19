@@ -46,14 +46,15 @@ describe('tdd.js', function() {
       };
       TDD.view(dom, model).modelChanged();
       model.foods().each(function(f) {
-        dom.find('.food option').text().should.include(f);
+        expect(dom.find('.food option').text()).to(include, f);
       });
     });
 
     it('removes existing values when populating food options', function() {
       var model = { types: [], foods: function () { return []; } };
       TDD.view(dom, model).modelChanged();
-      dom.find('.food option').text().should_not.include('Pate de Campagne');
+      expect(dom.find('.food option').text())
+        .not_to(include, 'Pate de Campagne');
     });
   });
 
@@ -69,17 +70,17 @@ describe('tdd.js', function() {
 
     it('returns foods of the currently selected type', function() {
       model.select('Cheese');
-      model.foods().should.eql(['Epoisse', 'Comte']);
+      expect(model.foods()).to(eql, ['Epoisse', 'Comte']);
     });
 
     it('triggers onChange when the type changes', function() {
-      model.should.receive('onChange');
+      expect(model).to(receive, 'onChange');
       model.select('Cheese');
     });
 
     it("doesn't trigger onChange if the type didn't change", function(){
       model.select('Cheese');
-      model.should_not.receive('onChange');
+      expect(model).not_to(receive, 'onChange');
       model.select('Cheese');
     });
   });
@@ -89,7 +90,7 @@ describe('tdd.js', function() {
       var model = { select: function() {} };
       var view = {};
       TDD.controller(model, view);
-      model.should.receive('select').with_args('Fish');
+      expect(model).to(receive, 'select').with_args('Fish');
       view.onTypeSelected('Fish');
     });
 
@@ -97,7 +98,7 @@ describe('tdd.js', function() {
       var model = {};
       var view = { modelChanged: function() {} };
       TDD.controller(model, view);
-      view.should.receive('modelChanged');
+      expect(view).to(receive, 'modelChanged');
       model.onChange();
     });
   });
