@@ -64,13 +64,26 @@ describe('tdd.js', function() {
       model = TDD.model({'Cheese': ['Epoisse', 'Comte'], 'Meat': []});
     });
 
+    it('adds an empty type to the start of the list', function() {
+      expect(model.types[0]).to(eql, '');
+    });
+
     it('knows all the types', function() {
-      expect(model.types).to(eql, ['Cheese', 'Meat']);
+      expect(model.types.slice(1)).to(eql, ['Cheese', 'Meat']);
     });
 
     it('returns foods of the currently selected type', function() {
       model.select('Cheese');
       expect(model.foods()).to(eql, ['Epoisse', 'Comte']);
+    });
+
+    it('returns no food for the empty type', function() {
+      model.select('');
+      expect(model.foods()).to(eql, []);
+    });
+
+    it('selects the empty type by default', function() {
+      expect(model.foods()).to(eql, []);
     });
 
     it('triggers onChange when the type changes', function() {
