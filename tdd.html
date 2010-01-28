@@ -5,18 +5,19 @@
     <script src="lib/tdd.js"></script>
     <script>
       jQuery(function() { 
-        TDD.init({
+        TDD.init(jQuery('#chooser'), {
           'Meat': ['Bratwurst', 'Spam', 'Pancetta', 'Turkey roll', 
                    'Prosciutto'],
           'Cheese': ['Ami du Chambertin', 'Epoisse', 'Comte', 'Cheddar',
                      'Stilton', 'Mozzarella'],
-          'Ice cream': ['Chocolate', 'Vanilla', 'Strawberry', 'Chocolate', 'Chocolate']
+          'Ice cream': ['Chocolate', 'Vanilla', 'Strawberry', 'Chocolate',
+                        'Chocolate']
         }); 
       });
     </script>
   </head>
   <body>
-    <form>
+    <form id="chooser">
       <p>
         Type of food: <select name="type" class="food-type"></select>
       </p>
